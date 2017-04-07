@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.text.DateFormat;
 
 public class Sighting {
   private int animal_id;
@@ -36,6 +37,10 @@ public class Sighting {
 
   public String getRangerName() {
     return ranger_name;
+  }
+
+  public String getTime() {
+    return DateFormat.getDateTimeInstance().format(sighting_occured);
   }
 
   @Override
@@ -83,14 +88,14 @@ public class Sighting {
     }
   }
 
-  public Timestamp getSightingTime() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT sighting_occured from sightings where id=:id;";
-      Timestamp timeSeen = con.createQuery(sql)
-        .addParameter("id", this.id)
-        .executeAndFetchFirst(Timestamp.class);
-        return timeSeen;
-    }
-  }
+  // public Timestamp getSightingTime() {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT sighting_occured from sightings where id=:id;";
+  //     Timestamp timeSeen = con.createQuery(sql)
+  //       .addParameter("id", this.id)
+  //       .executeAndFetchFirst(Timestamp.class);
+  //       return timeSeen;
+  //   }
+  // }
 
 }
