@@ -2,6 +2,9 @@ import org.sql2o.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 public class Sighting {
   private int animal_id;
@@ -9,6 +12,7 @@ public class Sighting {
   private String ranger_name;
   private int id;
   private boolean endangered;
+  private Timestamp sighting_occured;
 
   public Sighting(int animal_id, String location, String ranger_name, boolean endangered) {
     this.animal_id = animal_id;
@@ -46,7 +50,7 @@ public class Sighting {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO sightings (animal_id, location, ranger_name, endangered) VALUES (:animal_id, :location, :ranger_name, :endangered);";
+      String sql = "INSERT INTO sightings (animal_id, location, ranger_name, endangered, sighting_occured) VALUES (:animal_id, :location, :ranger_name, :endangered, now());";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("animal_id", this.animal_id)
         .addParameter("location", this.location)
@@ -76,6 +80,16 @@ public class Sighting {
       return sighting;
     } catch (IndexOutOfBoundsException exception) {
       return null;
+    }
+  }
+
+  public Timestamp getSightingTime() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT sighting_occured from sightings where id=:id;";
+      Timestamp timeSeen = con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetchFirst(Timestamp.class);
+        return timeSeen;
     }
   }
 
