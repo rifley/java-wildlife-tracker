@@ -94,7 +94,7 @@ public class EndangeredAnimal {
 
   public List<Sighting> getSightings() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM sightings WHERE animal_id=:id;";
+      String sql = "SELECT * FROM sightings WHERE animal_id=:id AND endangered = true;";
         List<Sighting> sightings = con.createQuery(sql)
           .addParameter("id", id)
           .executeAndFetch(Sighting.class);
