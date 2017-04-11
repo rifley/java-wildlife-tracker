@@ -8,6 +8,7 @@ public class Ranger {
   public String email;
   public String phoneNumber;
   public int id;
+  public static final String RANGER_STATION_PHONE = "555-7798-0900";
 
   public Ranger(String name, int badgeId, String email, String phoneNumber) {
     this.name = name;
@@ -36,6 +37,10 @@ public class Ranger {
     return phoneNumber;
   }
 
+  public String getRangerStationPhone() {
+    return RANGER_STATION_PHONE;
+  }
+
   @Override
   public boolean equals(Object otherRanger) {
     if(!(otherRanger instanceof Ranger)) {
@@ -61,6 +66,8 @@ public class Ranger {
       String sql = "SELECT * FROM rangers;";
       return con.createQuery(sql)
         .executeAndFetch(Ranger.class);
+    }catch(IndexOutofBoundsException exception){
+      return null;
     }
   }
 
