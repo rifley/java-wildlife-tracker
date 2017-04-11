@@ -66,8 +66,6 @@ public class Ranger {
       String sql = "SELECT * FROM rangers;";
       return con.createQuery(sql)
         .executeAndFetch(Ranger.class);
-    }catch(IndexOutofBoundsException exception){
-      return null;
     }
   }
 
