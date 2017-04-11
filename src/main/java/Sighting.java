@@ -88,14 +88,4 @@ public class Sighting {
     }
   }
 
-  // public Timestamp getSightingTime() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT sighting_occured from sightings where id=:id;";
-  //     Timestamp timeSeen = con.createQuery(sql)
-  //       .addParameter("id", this.id)
-  //       .executeAndFetchFirst(Timestamp.class);
-  //       return timeSeen;
-  //   }
-  // }
-
 }
